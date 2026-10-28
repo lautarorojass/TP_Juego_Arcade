@@ -1,0 +1,299 @@
+{
+  "inicio": "INTRO_01",
+  "nodos": [
+    {
+      "id": "INTRO_01",
+      "spk": "ELON",
+      "lineas": [
+        "La alerta marciana ya está en órbita terrestre.",
+        "Roadster listo. Tres oleadas antes de que alcancen la atmósfera."
+      ],
+      "opciones": [
+        {
+          "texto": "Despegar hacia la primera formación",
+          "cond": null,
+          "efecto": { "alerta": 1 },
+          "goto": "OLEADA_1"
+        }
+      ],
+      "cond": null,
+      "efecto": { "alerta": 0, "prueba": false, "alianza": false, "confianza": 0, "control": 0, "destino": "pendiente", "doble_canon": false },
+      "goto": null,
+      "fin": false,
+      "notas_direccion": "Inicio del juego. Mostrar título, alerta y objetivo; pausa de diálogo antes de comenzar la oleada 1."
+    },
+    {
+      "id": "OLEADA_1",
+      "spk": "ELON",
+      "lineas": [
+        "Primera oleada despejada. Estos invasores cubrían una baliza de navegación.",
+        "La señal quedó dañada, pero alguien de la Tierra intentó responder."
+      ],
+      "opciones": [
+        {
+          "texto": "Recuperar la señal de la baliza",
+          "cond": null,
+          "efecto": { "baliza_recuperada": true },
+          "goto": "SENAL_01"
+        }
+      ],
+      "cond": null,
+      "efecto": { "oleadas_superadas": 1 },
+      "goto": null,
+      "fin": false,
+      "notas_direccion": "Se activa al completar la oleada 1. La baliza introduce el misterio sobre el origen del ataque."
+    },
+    {
+      "id": "SENAL_01",
+      "spk": "MARK",
+      "lineas": [
+        "Elon, soy Mark. La líder marciana me dijo que la Tierra había atacado primero.",
+        "No pude comprobarlo. Ahora sé que usó mis retransmisores para guiar la flota."
+      ],
+      "opciones": [
+        {
+          "texto": "Analizar el registro transmitido",
+          "cond": null,
+          "efecto": { "prueba": true },
+          "goto": "DECISION_MARK"
+        }
+      ],
+      "cond": null,
+      "efecto": { "registro_recibido": true },
+      "goto": null,
+      "fin": false,
+      "notas_direccion": "Mark habla por radio. La evidencia confirma que fue engañado; preparar la decisión de confianza."
+    },
+    {
+      "id": "DECISION_MARK",
+      "spk": "ELON",
+      "lineas": [
+        "El registro confirma el engaño. Mark causó daño, aunque no conocía el plan completo.",
+        "La segunda oleada se acerca. ¿Lo enfrento o acepto su ayuda?"
+      ],
+      "opciones": [
+        {
+          "texto": "Confrontar a Mark y rechazar su ayuda",
+          "cond": { "prueba": true },
+          "efecto": { "alianza": false, "confianza": -1, "control": 1 },
+          "goto": "CONFRONTA_MARK"
+        },
+        {
+          "texto": "Aliarme con Mark y compartir los registros",
+          "cond": { "prueba": true },
+          "efecto": { "alianza": true, "confianza": 1, "doble_canon": true },
+          "goto": "ALIANZA_MARK"
+        }
+      ],
+      "cond": { "prueba": true },
+      "efecto": null,
+      "goto": null,
+      "fin": false,
+      "notas_direccion": "Primera decisión del jugador. Ambas rutas cambian contadores/banderas y vuelven a la trama común antes del clímax."
+    },
+    {
+      "id": "CONFRONTA_MARK",
+      "spk": "MARK",
+      "lineas": [
+        "Entiendo. No voy a tocar los controles de tu nave.",
+        "Te enviaré las coordenadas de la segunda oleada; después responderé por lo que hice."
+      ],
+      "opciones": [
+        {
+          "texto": "Continuar con las coordenadas recibidas",
+          "cond": null,
+          "efecto": { "coordenadas": true },
+          "goto": "CONVERGENCIA_01"
+        }
+      ],
+      "cond": { "alianza": false },
+      "efecto": { "apoyo_mark": false },
+      "goto": null,
+      "fin": false,
+      "notas_direccion": "Rama breve de confrontación. Mark entrega información, aunque no coopera con el combate."
+    },
+    {
+      "id": "ALIANZA_MARK",
+      "spk": "MARK",
+      "lineas": [
+        "Te paso el control de los retransmisores. Puedo cubrir tu flanco.",
+        "No borra mi responsabilidad, pero puedo ayudar a detener la flota."
+      ],
+      "opciones": [
+        {
+          "texto": "Aceptar el enlace de apoyo",
+          "cond": null,
+          "efecto": { "enlace_mark": true },
+          "goto": "CONVERGENCIA_01"
+        }
+      ],
+      "cond": { "alianza": true },
+      "efecto": { "apoyo_mark": true },
+      "goto": null,
+      "fin": false,
+      "notas_direccion": "Rama breve de alianza. La bandera doble_canon modifica la mecánica de disparo en la última oleada."
+    },
+    {
+      "id": "CONVERGENCIA_01",
+      "spk": "ELON",
+      "lineas": [
+        "La segunda oleada viene desde el cinturón de balizas.",
+        "Las coordenadas sirven, pero la flota no se detendrá sola."
+      ],
+      "opciones": [
+        {
+          "texto": "Preparar el Roadster para la segunda oleada",
+          "cond": null,
+          "efecto": { "preparado": true },
+          "goto": "OLEADA_2"
+        }
+      ],
+      "cond": null,
+      "efecto": { "ramas_convergidas": true },
+      "goto": null,
+      "fin": false,
+      "notas_direccion": "Nodo de convergencia explícito. Las dos ramas de la decisión anterior se reúnen aquí antes del clímax."
+    },
+    {
+      "id": "OLEADA_2",
+      "spk": "ELON",
+      "lineas": [
+        "Segunda oleada despejada. Las balizas apuntan al mando de la flota.",
+        "La líder marciana prepara el último avance."
+      ],
+      "opciones": [
+        {
+          "texto": "Seguir la señal hasta el mando enemigo",
+          "cond": null,
+          "efecto": { "oleadas_superadas": 2 },
+          "goto": "CLIMAX_01"
+        }
+      ],
+      "cond": null,
+      "efecto": { "oleadas_superadas": 2 },
+      "goto": null,
+      "fin": false,
+      "notas_direccion": "Se activa al completar la oleada 2. El guion vuelve a la misma ruta para todos."
+    },
+    {
+      "id": "CLIMAX_01",
+      "spk": "ELON",
+      "lineas": [
+        "La líder dirige la última formación hacia la Tierra.",
+        "Mark, si estás ahí, necesito los blancos de mando."
+      ],
+      "opciones": [
+        {
+          "texto": "Entrar en combate con la última oleada",
+          "cond": null,
+          "efecto": { "climax_iniciado": true },
+          "goto": "OLEADA_3"
+        }
+      ],
+      "cond": null,
+      "efecto": null,
+      "goto": null,
+      "fin": false,
+      "notas_direccion": "Clímax común. Si doble_canon=true, activar el segundo cañón como recompensa jugable de la alianza."
+    },
+    {
+      "id": "OLEADA_3",
+      "spk": "ELON",
+      "lineas": [
+        "La última nave cae. La Tierra está a salvo por ahora.",
+        "La flota marciana espera una respuesta; Mark también."
+      ],
+      "opciones": [
+        {
+          "texto": "Abrir el canal para decidir el futuro",
+          "cond": null,
+          "efecto": { "oleadas_superadas": 3, "victoria": true },
+          "goto": "EPILOGO"
+        }
+      ],
+      "cond": null,
+      "efecto": { "oleadas_superadas": 3 },
+      "goto": null,
+      "fin": false,
+      "notas_direccion": "Se activa al completar la oleada 3. La victoria conduce siempre al único nodo EPILOGO."
+    },
+    {
+      "id": "EPILOGO",
+      "spk": "ELON",
+      "lineas": [
+        "La amenaza inmediata terminó. Tu decisión definirá la relación con Mark o con Marte.",
+        "El destino elegido queda registrado para el cierre."
+      ],
+      "opciones": [
+        {
+          "texto": "Dejar que Mark vuelva a la Tierra",
+          "cond": { "alianza": false },
+          "efecto": { "destino": "mark_regresa", "control": -1 },
+          "goto": "FIN_TREGUA"
+        },
+        {
+          "texto": "Desterrar a Mark en Marte",
+          "cond": { "alianza": false },
+          "efecto": { "destino": "mark_exiliado", "control": 1 },
+          "goto": "FIN_EXILIO"
+        },
+        {
+          "texto": "Perdonar a los marcianos y abrir negociaciones",
+          "cond": { "alianza": true },
+          "efecto": { "destino": "marte_perdonado", "control": -1, "confianza": 1 },
+          "goto": "FIN_TREGUA"
+        },
+        {
+          "texto": "Conquistar Marte para impedir otra invasión",
+          "cond": { "alianza": true },
+          "efecto": { "destino": "marte_conquistado", "control": 2 },
+          "goto": "FIN_CONQUISTA"
+        }
+      ],
+      "cond": null,
+      "efecto": null,
+      "goto": null,
+      "fin": false,
+      "notas_direccion": "Segunda decisión, con opciones cuya visibilidad depende de alianza. Las cuatro intenciones se conservan en destino y llegan a tres finales distintos."
+    },
+    {
+      "id": "FIN_TREGUA",
+      "spk": "NARRADOR",
+      "lineas": [
+        "La Tierra abre un canal diplomático y la flota marciana se retira."
+      ],
+      "opciones": [],
+      "cond": { "destino": "mark_regresa" },
+      "efecto": null,
+      "goto": null,
+      "fin": true,
+      "notas_direccion": "Final de tregua. Si destino=mark_regresa, añadir: Mark vuelve a la Tierra bajo investigación. Si destino=marte_perdonado, añadir: la paz comienza con negociaciones supervisadas."
+    },
+    {
+      "id": "FIN_EXILIO",
+      "spk": "NARRADOR",
+      "lineas": [
+        "Mark queda exiliado en Marte. La Tierra se protege, pero la confianza se rompe."
+      ],
+      "opciones": [],
+      "cond": { "destino": "mark_exiliado" },
+      "efecto": null,
+      "goto": null,
+      "fin": true,
+      "notas_direccion": "Final de exilio, alcanzable desde EPILOGO cuando alianza=false."
+    },
+    {
+      "id": "FIN_CONQUISTA",
+      "spk": "NARRADOR",
+      "lineas": [
+        "La Tierra ocupa Marte para evitar otro ataque. La amenaza termina y comienza una resistencia."
+      ],
+      "opciones": [],
+      "cond": { "destino": "marte_conquistado" },
+      "efecto": null,
+      "goto": null,
+      "fin": true,
+      "notas_direccion": "Final de conquista, alcanzable desde EPILOGO cuando alianza=true."
+    }
+  ]
+}
